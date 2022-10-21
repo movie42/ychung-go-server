@@ -2,14 +2,20 @@ package notice
 
 import (
 	"context"
+	"time"
 
+	"github.com/movie42/ychung-go-server/entities"
 	"github.com/movie42/ychung-go-server/presenter"
 	"go.mongodb.org/mongo-driver/bson"
+	"go.mongodb.org/mongo-driver/bson/primitive"
 	"go.mongodb.org/mongo-driver/mongo"
 )
 
 type Repository interface {
+	DeleteNotice(ID string) error
+	CreateNotice(notice *entities.Notice) (*entities.Notice, error)
 	ReadNotice() (*[]presenter.Notice, error)
+	UpdateNotice(notice *entities.Notice) (*entities.Notice, error)
 }
 
 type repository struct {
@@ -20,6 +26,27 @@ func NewRepo(collection *mongo.Collection) Repository {
 	return &repository{
 		Collection: collection,
 	}
+}
+
+func (r *repository) UpdateNotice(notice *entities.Notice) (*entities.Notice, error) {
+	notice.UpdatedAt = time.Now()
+	_, err := r.Collection.UpdateOne(context.Background(), bson.M{"_id": notice.ID}, bson.M{"$set": notice})
+	if err != nil {
+		return nil, err
+	}
+	return notice, nil
+}
+
+func (r *repository) DeleteNotice(ID string) error {
+	noticeID, err := primitive.ObjectIDFromHex(ID)
+	if err != nil {
+		return err
+	}
+	_, err = r.Collection.DeleteOne(context.Background(), bson.M{"_id": noticeID})
+	if err != nil {
+		return err
+	}
+	return nil
 }
 
 func (r *repository) ReadNotice() (*[]presenter.Notice, error) {
@@ -34,4 +61,15 @@ func (r *repository) ReadNotice() (*[]presenter.Notice, error) {
 		notices = append(notices, notice)
 	}
 	return &notices, nil
+}
+
+func (r *repository) CreateNotice(notice *entities.Notice) (*entities.Notice, error) {
+	notice.ID = primitive.NewObjectID()
+	notice.CreatedAt = time.Now()
+	notice.UpdatedAt = time.Now()
+	_, err := r.Collection.InsertOne(context.Background(), notice)
+	if err != nil {
+		return nil, err
+	}
+	return notice, nil
 }

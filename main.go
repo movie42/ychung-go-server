@@ -30,8 +30,8 @@ func main() {
 		return ctx.Send([]byte("Welcome first go application"))
 	})
 
-	api := app.Group("/api")
-	router.ApiRouter(api, noticeService)
+	noticesApi := app.Group("/api/notices")
+	router.NoticeRouter(noticesApi, noticeService)
 	defer cancel()
 	log.Fatal(app.Listen(":3000"))
 }
