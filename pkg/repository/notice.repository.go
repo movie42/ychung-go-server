@@ -1,4 +1,4 @@
-package notice
+package repository
 
 import (
 	"context"
@@ -8,12 +8,7 @@ import (
 	"github.com/movie42/ychung-go-server/presenter"
 	"go.mongodb.org/mongo-driver/bson"
 	"go.mongodb.org/mongo-driver/bson/primitive"
-	"go.mongodb.org/mongo-driver/mongo"
 )
-
-type repository struct {
-	Collection *mongo.Collection
-}
 
 func (r *repository) UpdateNotice(notice *entities.Notice) (*entities.Notice, error) {
 	notice.UpdatedAt = time.Now()

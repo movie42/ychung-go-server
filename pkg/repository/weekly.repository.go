@@ -1,21 +1,13 @@
-package weekly
+package repository
 
 import (
 	"context"
 
 	"github.com/movie42/ychung-go-server/presenter"
 	"go.mongodb.org/mongo-driver/bson"
-	"go.mongodb.org/mongo-driver/mongo"
 )
 
-type Repository interface {
-}
-
-type repository struct {
-	Collection *mongo.Collection
-}
-
-func (r *repository) ReadWeekies() (*[]presenter.Weekly, error) {
+func (r *repository) ReadWeeklies() (*[]presenter.Weekly, error) {
 	var weeklies []presenter.Weekly
 	cursor, err := r.Collection.Find(context.Background(), bson.D{})
 	if err != nil {

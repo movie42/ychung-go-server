@@ -6,11 +6,11 @@ import (
 
 	"github.com/gofiber/fiber/v2"
 	"github.com/movie42/ychung-go-server/entities"
-	"github.com/movie42/ychung-go-server/pkg/notice"
+	"github.com/movie42/ychung-go-server/pkg/service"
 	"github.com/movie42/ychung-go-server/presenter"
 )
 
-func UpdateNotice(service notice.Service) fiber.Handler {
+func UpdateNotice(service service.Service) fiber.Handler {
 	return func(c *fiber.Ctx) error {
 		var requestBody entities.Notice
 		err := c.BodyParser(&requestBody)
@@ -27,7 +27,7 @@ func UpdateNotice(service notice.Service) fiber.Handler {
 	}
 }
 
-func DeleteNotice(service notice.Service) fiber.Handler {
+func DeleteNotice(service service.Service) fiber.Handler {
 	return func(c *fiber.Ctx) error {
 		var requestBody entities.NoticeDeleteRequest
 
@@ -50,7 +50,7 @@ func DeleteNotice(service notice.Service) fiber.Handler {
 	}
 }
 
-func AddNotice(service notice.Service) fiber.Handler {
+func AddNotice(service service.Service) fiber.Handler {
 	return func(c *fiber.Ctx) error {
 		var requestBody entities.Notice
 		err := c.BodyParser(&requestBody)
@@ -71,7 +71,7 @@ func AddNotice(service notice.Service) fiber.Handler {
 	}
 }
 
-func GetNotices(service notice.Service) fiber.Handler {
+func GetNotices(service service.Service) fiber.Handler {
 	return func(c *fiber.Ctx) error {
 		fetched, err := service.FetchNotices()
 		if err != nil {

@@ -1,13 +1,9 @@
-package notice
+package service
 
 import (
 	"github.com/movie42/ychung-go-server/entities"
 	"github.com/movie42/ychung-go-server/presenter"
 )
-
-type service struct {
-	repository
-}
 
 func (s *service) UpdateNotice(notice *entities.Notice) (*entities.Notice, error) {
 	return s.repository.UpdateNotice(notice)

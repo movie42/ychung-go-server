@@ -1,4 +1,4 @@
-package pkg
+package repository
 
 import (
 	"github.com/movie42/ychung-go-server/entities"
@@ -11,7 +11,7 @@ type Repository interface {
 	CreateNotice(notice *entities.Notice) (*entities.Notice, error)
 	ReadNotices() (*[]presenter.Notice, error)
 	UpdateNotice(notice *entities.Notice) (*entities.Notice, error)
-	ReadWeekies() (*[]presenter.Weekly, error)
+	ReadWeeklies() (*[]presenter.Weekly, error)
 }
 
 type repository struct {

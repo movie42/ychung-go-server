@@ -8,17 +8,12 @@ import (
 
 	"github.com/gofiber/fiber/v2"
 	"github.com/gofiber/fiber/v2/middleware/cors"
-	"github.com/movie42/ychung-go-server/pkg"
-	"github.com/movie42/ychung-go-server/pkg/notice"
-	"github.com/movie42/ychung-go-server/pkg/weekly"
+	"github.com/movie42/ychung-go-server/pkg/repository"
+	"github.com/movie42/ychung-go-server/pkg/service"
 	"github.com/movie42/ychung-go-server/router"
 	"go.mongodb.org/mongo-driver/mongo"
 	"go.mongodb.org/mongo-driver/mongo/options"
 )
-
-type TService interface {
-	notice.Service | weekly.Service
-}
 
 func main() {
 	db, cancel, err := databaseConnection()
@@ -27,9 +22,8 @@ func main() {
 	}
 	fmt.Println("Database Connection Success!")
 
-	noticeCollection := db.Collection("notices")
-	noticeReop := notice.NewRepo(noticeCollection)
-	noticeService := notice.NewService(noticeReop)
+	noticeService := databaseCollections("notices", db)
+	worshipService := databaseCollections("weeklies", db)
 
 	app := fiber.New()
 	app.Use(cors.New())
@@ -38,15 +32,18 @@ func main() {
 	})
 
 	noticesApi := app.Group("/api/notices")
+	worshipApi := app.Group("/api/worship")
 	router.NoticeRouter(noticesApi, noticeService)
+	router.WorshipRouter(worshipApi, worshipService)
+
 	defer cancel()
 	log.Fatal(app.Listen(":3000"))
 }
 
-func databaseCollections(collectionType string, db *mongo.Database) {
+func databaseCollections(collectionType string, db *mongo.Database) service.Service {
 	dbCollection := db.Collection(collectionType)
-	dbReop := pkg.NewRepo(dbCollection)
-	dbService := pkg.NewService(dbReop)
+	dbReop := repository.NewRepo(dbCollection)
+	dbService := service.NewService(dbReop)
 
 	return dbService
 }
