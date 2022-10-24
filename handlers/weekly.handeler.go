@@ -19,3 +19,21 @@ func GetWeekies(service service.Service) fiber.Handler {
 		return c.JSON(presenter.WeekliesSuccessResponse(fetched))
 	}
 }
+
+func CreateWeekly(service service.Service) fiber.Handler {
+	return func(c *fiber.Ctx) error {
+
+	}
+}
+
+func UpdateWeekly(service service.Service) fiber.Handler {
+	return func(c *fiber.Ctx) error {
+
+	}
+}
+
+func DeleteWeekly(service service.Service) fiber.Handler {
+	return func(c *fiber.Ctx) error {
+
+	}
+}

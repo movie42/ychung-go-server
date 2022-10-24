@@ -6,3 +6,6 @@ run: build
 
 watch:
 	reflex -s -r '\.go$$' make run
+
+nodemon:
+	nodemon --exec go run main.go --signal SIGTERM

@@ -10,6 +10,17 @@ import (
 	"go.mongodb.org/mongo-driver/bson/primitive"
 )
 
+func (r *repository) CreateNotice(notice *entities.Notice) (*entities.Notice, error) {
+	notice.ID = primitive.NewObjectID()
+	notice.CreatedAt = time.Now()
+	notice.UpdatedAt = time.Now()
+	_, err := r.Collection.InsertOne(context.Background(), notice)
+	if err != nil {
+		return nil, err
+	}
+	return notice, nil
+}
+
 func (r *repository) UpdateNotice(notice *entities.Notice) (*entities.Notice, error) {
 	notice.UpdatedAt = time.Now()
 	_, err := r.Collection.UpdateOne(context.Background(), bson.M{"_id": notice.ID}, bson.M{"$set": notice})
@@ -43,15 +54,4 @@ func (r *repository) ReadNotices() (*[]presenter.Notice, error) {
 		notices = append(notices, notice)
 	}
 	return &notices, nil
-}
-
-func (r *repository) CreateNotice(notice *entities.Notice) (*entities.Notice, error) {
-	notice.ID = primitive.NewObjectID()
-	notice.CreatedAt = time.Now()
-	notice.UpdatedAt = time.Now()
-	_, err := r.Collection.InsertOne(context.Background(), notice)
-	if err != nil {
-		return nil, err
-	}
-	return notice, nil
 }

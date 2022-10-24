@@ -7,11 +7,14 @@ import (
 )
 
 type Repository interface {
-	DeleteNotice(ID string) error
 	CreateNotice(notice *entities.Notice) (*entities.Notice, error)
 	ReadNotices() (*[]presenter.Notice, error)
 	UpdateNotice(notice *entities.Notice) (*entities.Notice, error)
+	DeleteNotice(ID string) error
 	ReadWeeklies() (*[]presenter.Weekly, error)
+	DeleteWeekly(ID string) error
+	CreateWeekly(weekly *entities.Weekly) (*entities.Weekly, error)
+	UpdateWeekly(weekly *entities.Weekly) (*entities.Weekly, error)
 }
 
 type repository struct {

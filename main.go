@@ -23,7 +23,7 @@ func main() {
 	fmt.Println("Database Connection Success!")
 
 	noticeService := databaseCollections("notices", db)
-	worshipService := databaseCollections("worships", db)
+	worshipService := databaseCollections("weeklies", db)
 
 	app := fiber.New()
 	app.Use(cors.New())
@@ -31,13 +31,16 @@ func main() {
 		return ctx.Send([]byte("Welcome first go application"))
 	})
 
-	noticesApi := app.Group("/api/notices")
-	worshipApi := app.Group("/api/worship")
-	router.NoticeRouter(noticesApi, noticeService)
-	router.WorshipRouter(worshipApi, worshipService)
+	// TODO: 마음에 안든다... 일단 구현하고 구조화를 해보자.
+	api := app.Group("/api")
+
+	router.NoticeRouter(api, noticeService)
+	router.WorshipRouter(api, worshipService)
+	// router.BlogRouter(api, worshipService)
+	// router.EducationRouter(api, worshipService)
 
 	defer cancel()
-	log.Fatal(app.Listen(":3000"))
+	log.Fatal(app.Listen(":4000"))
 }
 
 func databaseCollections(collectionType string, db *mongo.Database) service.Service {
@@ -50,7 +53,9 @@ func databaseCollections(collectionType string, db *mongo.Database) service.Serv
 
 func databaseConnection() (*mongo.Database, context.CancelFunc, error) {
 	ctx, cancel := context.WithTimeout(context.Background(), 10*time.Second)
-	client, err := mongo.Connect(ctx, options.Client().ApplyURI("mongodb://localhost:27017").SetServerSelectionTimeout(5*time.Second))
+	client, err := mongo.Connect(ctx, options.Client().ApplyURI(
+		"mongodb://localhost:27017").SetServerSelectionTimeout(
+		5*time.Second))
 
 	if err != nil {
 		cancel()

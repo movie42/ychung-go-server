@@ -8,10 +8,13 @@ import (
 
 type Service interface {
 	FetchWeeklies() (*[]presenter.Weekly, error)
+	InsertWeekly(weekly *entities.Weekly) (*entities.Weekly, error)
+	UpdateWeekly(weekly *entities.Weekly) (*entities.Weekly, error)
+	DeleteWeekly(ID string) error
 	FetchNotices() (*[]presenter.Notice, error)
 	InsertNotice(notice *entities.Notice) (*entities.Notice, error)
-	DeleteNotice(ID string) error
 	UpdateNotice(notice *entities.Notice) (*entities.Notice, error)
+	DeleteNotice(ID string) error
 }
 
 type service struct {
