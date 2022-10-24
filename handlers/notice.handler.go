@@ -29,7 +29,7 @@ func UpdateNotice(service notice.Service) fiber.Handler {
 
 func DeleteNotice(service notice.Service) fiber.Handler {
 	return func(c *fiber.Ctx) error {
-		var requestBody entities.DeleteRequest
+		var requestBody entities.NoticeDeleteRequest
 
 		err := c.BodyParser(&requestBody)
 		if err != nil {

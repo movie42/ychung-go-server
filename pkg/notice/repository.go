@@ -11,21 +11,8 @@ import (
 	"go.mongodb.org/mongo-driver/mongo"
 )
 
-type Repository interface {
-	DeleteNotice(ID string) error
-	CreateNotice(notice *entities.Notice) (*entities.Notice, error)
-	ReadNotice() (*[]presenter.Notice, error)
-	UpdateNotice(notice *entities.Notice) (*entities.Notice, error)
-}
-
 type repository struct {
 	Collection *mongo.Collection
-}
-
-func NewRepo(collection *mongo.Collection) Repository {
-	return &repository{
-		Collection: collection,
-	}
 }
 
 func (r *repository) UpdateNotice(notice *entities.Notice) (*entities.Notice, error) {
@@ -49,7 +36,7 @@ func (r *repository) DeleteNotice(ID string) error {
 	return nil
 }
 
-func (r *repository) ReadNotice() (*[]presenter.Notice, error) {
+func (r *repository) ReadNotices() (*[]presenter.Notice, error) {
 	var notices []presenter.Notice
 	cursor, err := r.Collection.Find(context.Background(), bson.D{})
 	if err != nil {
