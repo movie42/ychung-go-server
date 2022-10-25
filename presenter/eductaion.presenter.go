@@ -9,7 +9,7 @@ import (
 )
 
 type Groups struct {
-	ID        primitive.ObjectID   `json:"_id" bson:"id"`
+	ID        primitive.ObjectID   `json:"id" bson:"_id"`
 	Title     string               `json:"title" bson:"title"`
 	IsPublic  bool                 `json:"isPublic" bson:"isPublic"`
 	Groups    []primitive.ObjectID `json:"groups" bson:"groups"`

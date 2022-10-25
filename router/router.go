@@ -33,8 +33,8 @@ func BlogRouter(app fiber.Router, service service.Service) {
 	blog.Delete("/", handlers.DeleteBlogPost(service))
 }
 
-func EducationRouter(app fiber.Router, service service.Service) {
-	// education := app.Group("/education")
+// func EducationRouter(app fiber.Router, service service.Service) {
+// 	// education := app.Group("/education")
 
-	// education.Get("/")
-}
+// 	// education.Get("/")
+// }

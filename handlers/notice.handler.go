@@ -45,7 +45,7 @@ func DeleteNotice(service service.Service) fiber.Handler {
 		return c.JSON(&fiber.Map{
 			"status": true,
 			"data":   "게시물이 성공적으로 삭제되었습니다.",
-			"err":    nil,
+			"error":  nil,
 		})
 	}
 }
@@ -62,6 +62,7 @@ func AddNotice(service service.Service) fiber.Handler {
 			c.Status(http.StatusInternalServerError)
 			return c.JSON(presenter.NoticeErrorResponse(errors.New("제목이 꼭 필요합니다.")))
 		}
+
 		result, err := service.InsertNotice(&requestBody)
 		if err != nil {
 			c.Status(http.StatusInternalServerError)

@@ -11,10 +11,16 @@ type Service interface {
 	InsertWeekly(weekly *entities.Weekly) (*entities.Weekly, error)
 	UpdateWeekly(weekly *entities.Weekly) (*entities.Weekly, error)
 	DeleteWeekly(ID string) error
+
 	FetchNotices() (*[]presenter.Notice, error)
 	InsertNotice(notice *entities.Notice) (*entities.Notice, error)
 	UpdateNotice(notice *entities.Notice) (*entities.Notice, error)
 	DeleteNotice(ID string) error
+
+	InsertBlogPost(post *entities.BlogPost) (*entities.BlogPost, error)
+	FetchBlogPosts() (*[]presenter.BlogPost, error)
+	UpdateBlogPost(post *entities.BlogPost) (*entities.BlogPost, error)
+	DeleteBlogPost(ID string) error
 }
 
 type service struct {

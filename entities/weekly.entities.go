@@ -26,5 +26,5 @@ type Weekly struct {
 }
 
 type WeeklyDeleteRequest struct {
-	ID primitive.ObjectID `json:"id"`
+	ID string `json:"id"`
 }

@@ -9,7 +9,7 @@ import (
 )
 
 type BlogPost struct {
-	ID        primitive.ObjectID   `json:"_id" bson:"id"`
+	ID        primitive.ObjectID   `json:"id" bson:"_id"`
 	Title     string               `json:"title" bson:"title"`
 	Paragraph string               `json:"paragraph" bson:"paragraph"`
 	Creator   primitive.ObjectID   `json:"creator" bson:"creator"`

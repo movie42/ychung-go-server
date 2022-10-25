@@ -7,7 +7,7 @@ import (
 )
 
 type Groups struct {
-	ID        primitive.ObjectID `json:"_id" bson:"id"`
+	ID        primitive.ObjectID `json:"id" bson:"_id"`
 	Title     string
 	IsPublic  bool
 	Groups    []primitive.ObjectID `json:"groups" bson:"groups"`
@@ -35,11 +35,11 @@ type Human struct {
 }
 
 type GroupsDeleteRequest struct {
-	ID primitive.ObjectID `json:"_id"`
+	ID string `json:"_id"`
 }
 type GroupDeleteRequest struct {
-	ID primitive.ObjectID `json:"_id"`
+	ID string `json:"_id"`
 }
 type HumanDeleteRequest struct {
-	ID primitive.ObjectID `json:"_id"`
+	ID string `json:"_id"`
 }

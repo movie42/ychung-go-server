@@ -23,7 +23,8 @@ func main() {
 	fmt.Println("Database Connection Success!")
 
 	noticeService := databaseCollections("notices", db)
-	worshipService := databaseCollections("weeklies", db)
+	worshipService := databaseCollections("worships", db)
+	blogService := databaseCollections("blogs", db)
 
 	app := fiber.New()
 	app.Use(cors.New())
@@ -36,7 +37,7 @@ func main() {
 
 	router.NoticeRouter(api, noticeService)
 	router.WorshipRouter(api, worshipService)
-	// router.BlogRouter(api, worshipService)
+	router.BlogRouter(api, blogService)
 	// router.EducationRouter(api, worshipService)
 
 	defer cancel()
